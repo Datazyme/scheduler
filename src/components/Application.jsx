@@ -22,8 +22,8 @@ const days = [
 ];
 
 export default function Application(props) {
-  const [date, setDate] = useState("Monday");
-  console.log(date)
+  const [day, setDay] = useState("Monday");
+  console.log(day)
   return (
     <main className="layout">
       <section className="sidebar">
@@ -36,8 +36,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={date}
-            setDay={setDate}
+            value={day}
+            onChange={setDay}
           />
         </nav>
         <img
@@ -47,7 +47,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        <Appointment></Appointment>
       </section>
     </main>
   );
