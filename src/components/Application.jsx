@@ -47,7 +47,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        <Appointment></Appointment>
+        <Appointment value="value" onChange="onChange"></Appointment>
       </section>
     </main>
   );
