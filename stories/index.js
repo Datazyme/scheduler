@@ -1,10 +1,7 @@
 import React from "react";
-
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-
 import "index.scss";
-
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
@@ -17,6 +14,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 storiesOf("Button", module)
   .addParameters({
@@ -135,7 +133,7 @@ storiesOf("InterviewerList", module)
   .add("Clickable", () => (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ));
 storiesOf("Appointment", module)
@@ -179,4 +177,12 @@ storiesOf("Appointment", module)
   .add("Error", () => (
     (<Error 
     message="Could not delete appointment" onClose={action("onClose")} />)
+  ))
+
+  .add("Create", () => (
+    (<Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")}></Form>)
+  ))
+
+  .add("Edit", () => (
+    (<Form student="Anastasia" interviewer={4} interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")}></Form>)
   ))

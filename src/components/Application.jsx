@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import "components/Application.scss";
 import DayList from "./DayList";
+import Appointment from "./Appointment";
 
 const days = [
   {
@@ -47,7 +48,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        <Appointment value="value" onChange="onChange"></Appointment>
+        <Appointment ></Appointment>
       </section>
     </main>
   );
