@@ -29,38 +29,74 @@ describe("Form", () => {
     expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones");
   });
 
-  // it("validates that the student name is not blank", () => {
-  //   /* 1. Create the mock onSave function */
-  //   fireEvent.click(getByText("Save"));
-  //   /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the student prop should be blank or undefined */
+  it("validates that the student name is not blank", () => {
+    /* 1. Create the mock onSave function */
+    const onSave = jest.fn();
 
-  //   /* 3. Click the save button */
+    /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the student prop should be blank or undefined */
+    const { getByText } = render(
+      <Form interviewers={interviewers} onSave={onSave} />
+    );
 
-  //   expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
-  //   expect(onSave).not.toHaveBeenCalled();
-  // });
+    /* 3. Click the save button */
+    fireEvent.click(getByText("Save"));
 
-  // it("validates that the interviewer cannot be null", () => {
-  //   /* 1. Create the mock onSave function */
+    expect(getByText(/Student name cannot be blank/i)).toBeInTheDocument();
+    expect(onSave).not.toHaveBeenCalled();
+  });
 
-  //   /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the interviewer prop should be null */
+  it("validates that the interviewer cannot be null", () => {
+    /* 1. Create the mock onSave function */
+    const onSave = jest.fn();
 
-  //   /* 3. Click the save button */
+    /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the interviewer prop should be null */
+    const { getByText } = render(
+      <Form
+        interviewers={interviewers}
+        onSave={onSave}
+        student="Lydia Miller-Jones"
+      />
+    );
 
-  //   expect(getByText(/please select an interviewer/i)).toBeInTheDocument();
-  //   expect(onSave).not.toHaveBeenCalled();
-  // });
+    /* 3. Click the save button */
+    fireEvent.click(getByText("Save"));
+    expect(getByText(/Please select an interviewer/i)).toBeInTheDocument();
+    expect(onSave).not.toHaveBeenCalled();
+  });
 
-  // it("calls onSave function when the name and interviewer is defined", () => {
-  //   /* 1. Create the mock onSave function */
+  xit("calls onSave function when the name and interviewer is defined", () => {
+    /* 1. Create the mock onSave function */
+    const onSave = jest.fn();
 
-  //   /* 2. Render the Form with interviewers, name and the onSave mock function passed as an onSave prop */
+    /* 2. Render the Form with interviewers, name and the onSave mock function passed as an onSave prop */
+    const { queryByText, getByText } = render(
+      <Form
+        interviewers={interviewers}
+        interviewer={interviewers[0].id} //or interviewer={1} works
+        student="Lydia Miller-Jones"
+        onSave={onSave}
+      />
+    );
+    /* 3. Click the save button */
+    fireEvent.click(getByText("Save"));
+    expect(queryByText(/student name cannot be blank/i)).toBeNull();
+    expect(queryByText(/please select an interviewer/i)).toBeNull();
+    expect(onSave).toHaveBeenCalledTimes(1);
+    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
+  });
 
-  //   /* 3. Click the save button */
+  it("submits the name entered by the user", () => {
+    const onSave = jest.fn();
+    const { getByText, getByPlaceholderText } = render(
+      <Form interviewers={interviewers} onSave={onSave} interviewer={1} />
+    );
 
-  //   expect(queryByText(/student name cannot be blank/i)).toBeNull();
-  //   expect(queryByText(/please select an interviewer/i)).toBeNull();
-  //   expect(onSave).toHaveBeenCalledTimes(1);
-  //   expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
-  // });
+    const input = getByPlaceholderText("Enter Student Name");
+
+    fireEvent.change(input, { target: { value: "Lydia Miller-Jones" } });
+    fireEvent.click(getByText("Save"));
+
+    expect(onSave).toHaveBeenCalledTimes(1);
+    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
+  });
 });
