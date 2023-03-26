@@ -61,6 +61,9 @@ export default {
       data: fixtures.appointments,
     });
   }),
+  delete: jest.fn((url) => {
+    return Promise.resolve({});
+  }),
   get: jest.fn((url) => {
     if (url === "/api/days") {
       return Promise.resolve({
