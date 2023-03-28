@@ -27,18 +27,15 @@ export default function useApplicationData() {
     });
   }, []);
 
-  //calculates spots remaining, called in then of booking and cancelling
-  const spotsRemaining = (id, spots) => {
-    const daysArr = [...state.days];
-    daysArr.map(function (day) {
-      for (let appointment of day.appointments) {
-        if (appointment === id) {
-          day.spots += spots;
-        }
-      }
-      return day.spots;
-    });
-    return daysArr;
+  //calculates spots in the selected day
+  const spotsRemaining = (day, appointments) => {
+    const currentDay = state.days.find((days) => days.name === day);
+
+    const spots = currentDay.appointments.filter(
+      (id) => !appointments[id].interview
+    );
+
+    return spots.length;
   };
 
   //bookInterview action makes an HTTP request and updates the local state
@@ -49,11 +46,17 @@ export default function useApplicationData() {
     };
     const appointments = { ...state.appointments, [id]: appointment };
 
-    //const days = updateSpots(state.day, state.days, appointments);
+    const days = state.days.map((day) => {
+      const spotsFunc = {
+        ...day,
+        spots: spotsRemaining(state.day, appointments),
+      };
+      const currentSpots = day.name === state.day ? spotsFunc : day;
+      return currentSpots;
+    });
 
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
-      spotsRemaining(id, -1);
-      setState((prev) => ({ ...prev, appointments }));
+      setState((prev) => ({ ...prev, appointments, days }));
     });
   };
 
@@ -62,13 +65,35 @@ export default function useApplicationData() {
     const appointment = { ...state.appointments[id], interview: null };
     const appointments = { ...state.appointments, [id]: appointment };
 
-    //const days = updateSpots(state.day, state.days, appointments);
+    const days = state.days.map((day) => {
+      const spotsFunc = {
+        ...day,
+        spots: spotsRemaining(state.day, appointments),
+      };
+      const currentSpots = day.name === state.day ? spotsFunc : day;
+      return currentSpots;
+    });
 
     return axios.delete(`/api/appointments/${id}`).then(() => {
-      spotsRemaining(id, 1);
-      setState((prev) => ({ ...prev, appointments }));
+      setState((prev) => ({ ...prev, appointments, days }));
     });
   };
 
   return { state, setDay, bookInterview, cancelInterview };
 }
+
+//calculates spots remaining, called in then of booking and cancelling
+// const spotsRemaining = (id, spots) => {
+//   const daysArr = [...state.days];
+//   daysArr.map(function (day) {
+//     for (let appointment of day.appointments) {
+//       if (appointment === id) {
+//         day.spots += spots;
+//       }
+//     }
+//     return day.spots;
+//   });
+//   return daysArr;
+// };
+// spotsRemaining(id, -1);
+// spotsRemaining(id, 1);
