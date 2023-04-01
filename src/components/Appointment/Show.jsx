@@ -1,5 +1,6 @@
 import React from "react";
 
+//displays booked appointment and delete, edit clickables upon mouseover
 export default function Show(props) {
   return (
     <main className="appointment__card appointment__card--show">
@@ -27,5 +28,5 @@ export default function Show(props) {
         </section>
       </section>
     </main>
-  )
-};
+  );
+}

@@ -3,6 +3,7 @@ import InterviewerListItem from "./InterviewerListItem";
 import "components/InterviewerList.scss";
 import PropTypes from "prop-types";
 
+//displays interviewers list for time slot
 export default function InterviewerList(props) {
   const interViewers = props.interviewers.map((interviewer) => {
     InterviewerList.propTypes = {

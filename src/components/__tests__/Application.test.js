@@ -29,26 +29,34 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
+    // 1. Render the Application
     const { container, debug } = render(<Application />);
 
+    //wait for Archie Cohen to be displayed
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
+    //select add on first empty appointment
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];
 
     fireEvent.click(getByAltText(appointment, "Add"));
 
+    //enter student name
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" },
     });
 
+    //select interviewer
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
+    //save appointment
     fireEvent.click(getByText(appointment, "Save"));
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
+    //check to see if appointment was saved
     await waitForElement(() => queryByText(appointment, "Lydia Miller-Jones"));
 
+    //Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
     );

@@ -1,5 +1,6 @@
 import React from "react";
 
+//displays the empty appointments and uses Add button as + sign
 export default function Empty(props) {
   return (
     <main className="appointment__add">
@@ -10,5 +11,5 @@ export default function Empty(props) {
         onClick={props.onAdd}
       />
     </main>
-  )
-};
+  );
+}
