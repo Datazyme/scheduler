@@ -10,24 +10,18 @@ A single-page app built with React.js which allows users to book interviews. Eac
 
 !["Deleting appointment"](https://github.com/Datazyme/scheduler/blob/master/screenShots/Delete%20Appointment.png)
 
-## Setup
+## Setup to run locally
 
-Install dependencies with `npm install`.
+1. Fork or clone scheduler and scheduler-api
+2. Install dependencies with `npm install`
+3. Additional dependencies
 
-## Running Webpack Development Server
+- react 16.9.0
+- axios
+- @testing-library/react-hooks
+- react-test-renderer (`npm install --save-dev react-test-renderer@^16.9.0`)
+- storybook
 
-```sh
-npm start
-```
-
-## Running Jest Test Framework
-
-```sh
-npm test
-```
-
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
+4. Run both scheduler and scheduler-api from different terminal windows with `npm start`
+5. Run storybook with `npm run storybook`
+6. Run Jest Tests with `npm test`
