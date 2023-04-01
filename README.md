@@ -4,7 +4,11 @@ A single-page app built with React.js which allows users to book interviews. Eac
 
 # Screen Shots
 
-!["Booked appointment"](https://github.com/Datazyme/PasswordKeepR/blob/fixing_css_html/Pictures/Screen%20Shot%202023-02-11%20at%202.29.41%20PM.png)
+!["Booked appointment"](https://github.com/Datazyme/scheduler/blob/master/screenShots/Booked%20Appointment.png)
+
+!["Booking appointment"](https://github.com/Datazyme/scheduler/blob/master/screenShots/Booking%20Appointment.png)
+
+!["Deleting appointment"](https://github.com/Datazyme/scheduler/blob/master/screenShots/Delete%20Appointment.png)
 
 ## Setup
 
